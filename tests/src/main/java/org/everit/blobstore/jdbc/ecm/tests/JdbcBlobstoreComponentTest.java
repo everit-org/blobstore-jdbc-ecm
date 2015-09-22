@@ -31,14 +31,14 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 /**
  * Test for Querydsl Support Component.
  */
-@Component(componentId = "QuerydslSupportComponentTest")
+@Component(componentId = "JdbcBlobstoreComponentTest")
 @ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
     value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "=${@class}")
 @StringAttributes({
     @StringAttribute(attributeId = TestRunnerConstants.SERVICE_PROPERTY_TESTRUNNER_ENGINE_TYPE,
         defaultValue = "junit4"),
     @StringAttribute(attributeId = TestRunnerConstants.SERVICE_PROPERTY_TEST_ID,
-        defaultValue = "querydslSupportComponentTest") })
+        defaultValue = "jdbcBlobstoreComponentTest") })
 @Service(JdbcBlobstoreComponentTest.class)
 public class JdbcBlobstoreComponentTest {
 

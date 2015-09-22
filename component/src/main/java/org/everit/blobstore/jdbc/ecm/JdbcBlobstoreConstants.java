@@ -20,7 +20,13 @@ package org.everit.blobstore.jdbc.ecm;
  */
 public final class JdbcBlobstoreConstants {
 
-  public static final String ATTR_BLOB_ACCESS_MODE = "blobAccessMode.name";
+  public static final String ATTR_BLOB_ACCESS_MODE = "blobAccessMode";
+
+  public static final String ATTR_BLOB_READING_LOCK_QUERYFLAG_EXPRESSION =
+      "blob.reading.lock.queryFlag.expression";
+
+  public static final String ATTR_BLOB_READING_LOCK_QUERYFLAG_POSITION =
+      "blob.reading.lock.queryFlag.position";
 
   public static final String ATTR_BLOB_SELECTION_EXPRESSION_TARGET =
       "blobSelectionExpression.target";
@@ -29,14 +35,10 @@ public final class JdbcBlobstoreConstants {
 
   public static final String ATTR_EMPTY_BLOB_EXPRESSION_TARGET = "emptyBlobExpression.target";
 
-  public static final String ATTR_FLAG = "flag.name";
-
-  public static final String ATTR_POSITION = "position.name";
-
   public static final String ATTR_QUERYDSL_CONFIGURATION_TARGET = "querydslConfiguration.target";
 
   public static final String ATTR_UPDATE_SQL_AFTER_BLOB_CONTENT_MANIPULATION =
-      "updateSQLAfterBlobContentManipulation.name";
+      "updateSQLAfterBlobContentManipulation";
 
   public static final String DEFAULT_SERVICE_DESCRIPTION = "Default Jdbc Blobstore Component";
 
