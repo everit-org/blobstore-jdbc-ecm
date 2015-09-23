@@ -18,7 +18,6 @@ package org.everit.blobstore.jdbc.ecm.internal;
 import java.sql.Blob;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -36,9 +35,9 @@ import org.everit.osgi.ecm.annotation.attribute.BooleanAttribute;
 import org.everit.osgi.ecm.annotation.attribute.StringAttribute;
 import org.everit.osgi.ecm.annotation.attribute.StringAttributeOption;
 import org.everit.osgi.ecm.annotation.attribute.StringAttributes;
+import org.everit.osgi.ecm.component.ComponentContext;
 import org.everit.osgi.ecm.component.ConfigurationException;
 import org.everit.osgi.ecm.extender.ECMExtenderConstants;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 
@@ -85,7 +84,7 @@ public class JdbcBlobstoreComponent {
    * Component activator method.
    */
   @Activate
-  public void activate(final BundleContext context, final Map<String, Object> componentProperties) {
+  public void activate(final ComponentContext<JdbcBlobstoreComponent> componentContext) {
     JdbcBlobstoreConfiguration configuration = new JdbcBlobstoreConfiguration();
     if (((blobReadingLockQueryFlagPosition == null) && (blobReadingLockQueryFlagExpression != null))
         || ((blobReadingLockQueryFlagPosition != null)
@@ -103,11 +102,13 @@ public class JdbcBlobstoreComponent {
     configuration.emptyBlobExpression = emptyBlobExpression;
     configuration.querydslConfiguration = querydslConfiguration;
     configuration.updateSQLAfterBlobContentManipulation = updateSQLAfterBlobContentManipulation;
+
     Blobstore blobstore = new JdbcBlobstore(dataSource, configuration);
+
     Dictionary<String, Object> serviceProperties =
-        new Hashtable<String, Object>(componentProperties);
+        new Hashtable<String, Object>(componentContext.getProperties());
     serviceRegistration =
-        context.registerService(Blobstore.class, blobstore, serviceProperties);
+        componentContext.registerService(Blobstore.class, blobstore, serviceProperties);
   }
 
   /**
