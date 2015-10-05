@@ -30,6 +30,7 @@ import org.everit.osgi.ecm.annotation.Activate;
 import org.everit.osgi.ecm.annotation.Component;
 import org.everit.osgi.ecm.annotation.ConfigurationPolicy;
 import org.everit.osgi.ecm.annotation.Deactivate;
+import org.everit.osgi.ecm.annotation.ManualService;
 import org.everit.osgi.ecm.annotation.ServiceRef;
 import org.everit.osgi.ecm.annotation.attribute.BooleanAttribute;
 import org.everit.osgi.ecm.annotation.attribute.StringAttribute;
@@ -59,7 +60,12 @@ import aQute.bnd.annotation.headers.ProvideCapability;
     value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "=${@class}")
 @StringAttributes({
     @StringAttribute(attributeId = Constants.SERVICE_DESCRIPTION,
-        defaultValue = JdbcBlobstoreConstants.DEFAULT_SERVICE_DESCRIPTION) })
+        defaultValue = JdbcBlobstoreConstants.DEFAULT_SERVICE_DESCRIPTION,
+        priority = JdbcBlobstoreAttributePriority.P01_SERVICE_DESCRIPTION,
+        label = "Service Description",
+        description = "The description of this component configuration. It is used to easily "
+            + "identify the service registered by this component.") })
+@ManualService(Blobstore.class)
 public class JdbcBlobstoreComponent {
 
   private BlobAccessMode blobAccessMode;
@@ -127,6 +133,7 @@ public class JdbcBlobstoreComponent {
               value = JdbcBlobstoreConstants.OPTION_BLOB_ACCESS_MODE_BYTES),
           @StringAttributeOption(label = JdbcBlobstoreConstants.OPTION_BLOB_ACCESS_MODE_STREAM,
               value = JdbcBlobstoreConstants.OPTION_BLOB_ACCESS_MODE_STREAM) },
+      priority = JdbcBlobstoreAttributePriority.P04_BLOB_ACCESS_MODE,
       label = "Blob Access Mode",
       description = "The mode how the blob is accessed. If null, the mode is automatically guessed "
           + "from the type of the database.")
@@ -136,6 +143,7 @@ public class JdbcBlobstoreComponent {
 
   @StringAttribute(attributeId = JdbcBlobstoreConstants.ATTR_BLOB_READING_LOCK_QUERYFLAG_EXPRESSION,
       optional = true,
+      priority = JdbcBlobstoreAttributePriority.P06_BLOB_READING_LOCK_QUERYFLAG_EXPRESSION,
       label = "Blob reading lock QueryFlag expression",
       description = "The flaq for blob reading lock. If add must be add position too.")
   public void setBlobReadingLockQueryFlagExpression(
@@ -174,6 +182,7 @@ public class JdbcBlobstoreComponent {
               value = JdbcBlobstoreConstants.OPTION_POSITION_START_OVERRIDE),
           @StringAttributeOption(label = JdbcBlobstoreConstants.OPTION_POSITION_WITH,
               value = JdbcBlobstoreConstants.OPTION_POSITION_WITH) },
+      priority = JdbcBlobstoreAttributePriority.P05_BLOB_READING_LOCK_QUERYFLAG_POSITION,
       label = "Blob reading lock QueryFlag position",
       description = "The position for blob reading lock. If add must be add flag too.")
   public void setBlobReadingLockQueryFlagPosition(final String blobReadingLockQueryFlagPosition) {
@@ -182,7 +191,9 @@ public class JdbcBlobstoreComponent {
   }
 
   @ServiceRef(attributeId = JdbcBlobstoreConstants.ATTR_BLOB_SELECTION_EXPRESSION_TARGET,
-      optional = true, label = "Blob selection expression",
+      optional = true,
+      attributePriority = JdbcBlobstoreAttributePriority.P09_BLOB_SELECTION_EXPRESSION_TARGET,
+      label = "Blob selection expression",
       description = "Selection expression in SQL queries of the Blob field. If null it is "
           + "automatically derived based on the database metadata. OSGi Service filter "
           + "expression for Expression<Blob>.")
@@ -191,7 +202,7 @@ public class JdbcBlobstoreComponent {
   }
 
   @ServiceRef(attributeId = JdbcBlobstoreConstants.ATTR_DATASOURCE_TARGET, label = "DataSource",
-      defaultValue = "",
+      defaultValue = "", attributePriority = JdbcBlobstoreAttributePriority.P02_DATASOURCE,
       description = "The datasource that will be used to store and read blobs. OSGi Service filter "
           + "expression for javax.sql.DataSource.")
   public void setDataSource(final DataSource dataSource) {
@@ -199,7 +210,9 @@ public class JdbcBlobstoreComponent {
   }
 
   @ServiceRef(attributeId = JdbcBlobstoreConstants.ATTR_EMPTY_BLOB_EXPRESSION_TARGET,
-      optional = true, label = "Empty blob expression.",
+      optional = true,
+      attributePriority = JdbcBlobstoreAttributePriority.P08_EMPTY_BLOB_EXPRESSION_TARGET,
+      label = "Empty blob expression.",
       description = "Expression that generates the empty blob. If null the empty blob expression"
           + " is automatically guessed from the type of the database. OSGi Service filter "
           + "expression for Expression<Blob>.")
@@ -208,7 +221,9 @@ public class JdbcBlobstoreComponent {
   }
 
   @ServiceRef(attributeId = JdbcBlobstoreConstants.ATTR_QUERYDSL_CONFIGURATION_TARGET,
-      optional = true, label = "Querydsl Configuration",
+      optional = true,
+      attributePriority = JdbcBlobstoreAttributePriority.P03_QUERYDSL_CONFIGURATION,
+      label = "Querydsl Configuration",
       description = "Configuration of queryDsl to construct the SQL queries. If null, it is "
           + "guessed based on the metadata of the database connection. OSGi Service filter "
           + "expression for com.querydsl.sql.Configuration.")
@@ -218,7 +233,9 @@ public class JdbcBlobstoreComponent {
 
   @BooleanAttribute(
       attributeId = JdbcBlobstoreConstants.ATTR_UPDATE_SQL_AFTER_BLOB_CONTENT_MANIPULATION,
-      optional = true, label = "Update SQL After Blob Content Manipulation",
+      optional = true,
+      priority = JdbcBlobstoreAttributePriority.P07_UPDATE_SQL_AFTER_BLOB_CONTENT_MANIPULATION,
+      label = "Update SQL After Blob Content Manipulation",
       description = "Whether calling update SQL after manipulating the Blob instance is "
           + "necessary or not.")
   public void setUpdateSQLAfterBlobContentManipulation(
