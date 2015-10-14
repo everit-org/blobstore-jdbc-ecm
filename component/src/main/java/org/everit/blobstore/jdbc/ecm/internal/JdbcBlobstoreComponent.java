@@ -53,9 +53,9 @@ import aQute.bnd.annotation.headers.ProvideCapability;
  * ECM component for {@link Blobstore} interface based on {@link JdbcBlobstore}.
  */
 @Component(componentId = JdbcBlobstoreConstants.SERVICE_FACTORYPID_JDBC_BLOBSTORE,
-    configurationPolicy = ConfigurationPolicy.FACTORY, label = "Jdbc Blobstore (EverIT)",
-    description = "Implements a org.everit.blobstore.Blobstore as an ECM component. "
-        + "Registers an org.everit.blobstore.Blobstore OSGi Service.")
+    configurationPolicy = ConfigurationPolicy.FACTORY, label = "Everit Jdbc Blobstore",
+    description = "Registers an org.everit.blobstore.Blobstore OSGi Service "
+        + "The Blobstore implementation is org.everit.blobstore.jdbc.JdbcBlobstore.")
 @ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
     value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "=${@class}")
 @StringAttributes({
