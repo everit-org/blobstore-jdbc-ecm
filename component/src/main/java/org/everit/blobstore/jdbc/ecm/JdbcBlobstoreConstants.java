@@ -75,7 +75,7 @@ public final class JdbcBlobstoreConstants {
   public static final String OPTION_POSITION_WITH = "WITH";
 
   public static final String SERVICE_FACTORYPID_JDBC_BLOBSTORE =
-      "org.everit.blobstore.jdbc.JdbcBlobstore";
+      "org.everit.blobstore.jdbc.ecm.JdbcBlobstore";
 
   private JdbcBlobstoreConstants() {
   }
