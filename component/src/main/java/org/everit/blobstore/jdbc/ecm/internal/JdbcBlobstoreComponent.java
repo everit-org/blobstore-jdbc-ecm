@@ -31,6 +31,7 @@ import org.everit.osgi.ecm.annotation.Component;
 import org.everit.osgi.ecm.annotation.ConfigurationPolicy;
 import org.everit.osgi.ecm.annotation.Deactivate;
 import org.everit.osgi.ecm.annotation.ManualService;
+import org.everit.osgi.ecm.annotation.ManualServices;
 import org.everit.osgi.ecm.annotation.ServiceRef;
 import org.everit.osgi.ecm.annotation.attribute.BooleanAttribute;
 import org.everit.osgi.ecm.annotation.attribute.StringAttribute;
@@ -38,7 +39,7 @@ import org.everit.osgi.ecm.annotation.attribute.StringAttributeOption;
 import org.everit.osgi.ecm.annotation.attribute.StringAttributes;
 import org.everit.osgi.ecm.component.ComponentContext;
 import org.everit.osgi.ecm.component.ConfigurationException;
-import org.everit.osgi.ecm.extender.ECMExtenderConstants;
+import org.everit.osgi.ecm.extender.ExtendComponent;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 
@@ -47,17 +48,14 @@ import com.querydsl.core.QueryFlag.Position;
 import com.querydsl.core.types.Expression;
 import com.querydsl.sql.Configuration;
 
-import aQute.bnd.annotation.headers.ProvideCapability;
-
 /**
  * ECM component for {@link Blobstore} interface based on {@link JdbcBlobstore}.
  */
+@ExtendComponent
 @Component(componentId = JdbcBlobstoreConstants.SERVICE_FACTORYPID_JDBC_BLOBSTORE,
     configurationPolicy = ConfigurationPolicy.FACTORY, label = "Everit Jdbc Blobstore",
     description = "Registers an org.everit.blobstore.Blobstore OSGi Service "
         + "The Blobstore implementation is org.everit.blobstore.jdbc.JdbcBlobstore.")
-@ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
-    value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "=${@class}")
 @StringAttributes({
     @StringAttribute(attributeId = Constants.SERVICE_DESCRIPTION,
         defaultValue = JdbcBlobstoreConstants.DEFAULT_SERVICE_DESCRIPTION,
@@ -65,7 +63,7 @@ import aQute.bnd.annotation.headers.ProvideCapability;
         label = "Service Description",
         description = "The description of this component configuration. It is used to easily "
             + "identify the service registered by this component.") })
-@ManualService(Blobstore.class)
+@ManualServices(@ManualService(Blobstore.class))
 public class JdbcBlobstoreComponent {
 
   private BlobAccessMode blobAccessMode;
