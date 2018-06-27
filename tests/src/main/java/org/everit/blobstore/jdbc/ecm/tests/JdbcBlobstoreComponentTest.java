@@ -16,6 +16,7 @@
 package org.everit.blobstore.jdbc.ecm.tests;
 
 import org.everit.blobstore.Blobstore;
+import org.everit.osgi.dev.testrunner.EOSGiTestClass;
 import org.everit.osgi.dev.testrunner.TestRunnerConstants;
 import org.everit.osgi.ecm.annotation.Component;
 import org.everit.osgi.ecm.annotation.Service;
@@ -32,11 +33,12 @@ import org.junit.Test;
 @ExtendComponent
 @Component(componentId = "JdbcBlobstoreComponentTest")
 @StringAttributes({
-    @StringAttribute(attributeId = TestRunnerConstants.SERVICE_PROPERTY_TESTRUNNER_ENGINE_TYPE,
+    @StringAttribute(attributeId = TestRunnerConstants.SERVICE_PROPERTY_TESTRUNNER_ENGINE,
         defaultValue = "junit4"),
     @StringAttribute(attributeId = TestRunnerConstants.SERVICE_PROPERTY_TEST_ID,
         defaultValue = "jdbcBlobstoreComponentTest") })
 @Service(JdbcBlobstoreComponentTest.class)
+@EOSGiTestClass
 public class JdbcBlobstoreComponentTest {
 
   private Blobstore blobStore;
@@ -48,6 +50,6 @@ public class JdbcBlobstoreComponentTest {
 
   @Test
   public void testThatComponentIsAlive() {
-    Assert.assertNotNull("BlobStore is not binded.", blobStore);
+    Assert.assertNotNull("BlobStore is not binded.", this.blobStore);
   }
 }
